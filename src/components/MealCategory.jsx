@@ -6,7 +6,9 @@ function MealCategory(props) {
 
 	return (
 		<div className={classes.wrapper}>
-			<Link to={route}>{props.category}</Link>
+			<Link to={route}>
+				<button> {props.category}</button>
+			</Link>
 		</div>
 	);
 }
