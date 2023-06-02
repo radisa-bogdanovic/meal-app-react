@@ -1,0 +1,14 @@
+.wrapper {
+	border-radius: 10px;
+	background-color: aliceblue;
+	padding: 20px 50px;
+	margin: 10px;
+}
+
+.wrapper a {
+	color: brown;
+	font-size: 1.2rem;
+	font-weight: 700;
+	min-width: 300px;
+	margin: 10px;
+}

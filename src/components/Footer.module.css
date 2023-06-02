@@ -1,0 +1,28 @@
+.container {
+	height: 3rem;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	background-color: #77002e;
+	padding: 0 10%;
+	margin-top: auto;
+	width: 100%;
+	position: fixed;
+	bottom: 0;
+}
+
+.container ul {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	justify-content: space-between;
+	width: 80%;
+}
+
+.container a,
+.listItems {
+	text-decoration: none;
+	font-size: 1.5rem;
+	color: #fcb8d2;
+}
