@@ -85,8 +85,3 @@ export interface MealCategoryModel {
 export interface SingleMealCategoryName {
 	strCategory: string;
 }
-
-export interface RandomMeal {
-	randomItem: () => {};
-	meals: SingleMealModel;
-}

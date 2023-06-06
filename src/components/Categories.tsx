@@ -8,7 +8,7 @@ function Categories ( categories : SingleMealCategoryName[] ) {
 		<>
 			<h3 className={classes.title}>CATEGORIES</h3>
 			<div className={classes.wrapper}>
-				{Object.entries(categories).map(([key, subject], i)  => {
+				{Object.entries(categories).map(([, subject])  => {
 					return (
 						<MealCategory
 							category={subject.strCategory}

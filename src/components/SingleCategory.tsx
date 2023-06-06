@@ -14,7 +14,7 @@ const SingleCategory: React.FC<ListOfMealsFromSingleCategory>= (category:ListOfM
 				Meals for {routeParams.categories} category
 			</h3>
 			<div className={classes.container}>
-				{Object.entries(category).map(([key, subject], i) => {
+				{Object.entries(category).map(([, subject]) => {
 					return (
 						<div className={classes.wrapper} key={subject.idMeal}>
 							<h3> Name : {subject.strMeal} </h3>
