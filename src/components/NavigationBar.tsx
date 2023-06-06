@@ -1,3 +1,4 @@
+import React from "react";
 import classes from "./NavigationBar.module.css";
 import { Link } from "react-router-dom";
 

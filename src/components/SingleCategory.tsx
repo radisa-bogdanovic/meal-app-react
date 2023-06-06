@@ -1,10 +1,12 @@
 import { useParams } from "react-router-dom";
-
 import { Link } from "react-router-dom";
 import classes from "./SingleCategory.module.css";
+import React from "react";
+import { ListOfMealsFromSingleCategory } from "pages/models/models";
 
-function SingleCategory(props) {
+const SingleCategory: React.FC<ListOfMealsFromSingleCategory>= (category:ListOfMealsFromSingleCategory ) =>{
 	const routeParams = useParams();
+
 
 	return (
 		<>
@@ -12,15 +14,15 @@ function SingleCategory(props) {
 				Meals for {routeParams.categories} category
 			</h3>
 			<div className={classes.container}>
-				{props.category.map((meal) => {
+				{Object.entries(category).map(([key, subject], i) => {
 					return (
-						<div className={classes.wrapper} key={meal.idMeal}>
-							<h3> Name : {meal.strMeal} </h3>
+						<div className={classes.wrapper} key={subject.idMeal}>
+							<h3> Name : {subject.strMeal} </h3>
 							<div className={classes.imgContainer}>
-								<img src={meal.strMealThumb} alt="" />
+								<img src={subject.strMealThumb} alt="" />
 							</div>
 							<button>
-								<Link to={`/meal/${meal.idMeal}`}> See more </Link>
+								<Link to={`/meal/${subject.idMeal}`}> See more </Link>
 							</button>
 						</div>
 					);

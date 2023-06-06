@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./AboutUsPage.module.css";
 
 const AboutUs = () => {

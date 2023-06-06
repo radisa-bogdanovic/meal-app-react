@@ -2,7 +2,7 @@ import "./App.css";
 
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import NotFound from "./components/NotFound";
+import  NotFound  from "./components/NotFound";
 
 import NavigationBar from "./components/NavigationBar";
 

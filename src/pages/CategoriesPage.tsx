@@ -1,11 +1,13 @@
 import { useLoaderData } from "react-router-dom";
 
 import Categories from "../components/Categories";
+import { SingleMealCategoryName } from "./models/models";
 
 function CategoryPage() {
-	const categories = useLoaderData();
+	const categories = useLoaderData() as  SingleMealCategoryName[] ;
 
-	return <Categories categories={categories} />;
+
+	return <Categories {...categories} />;
 }
 
 export default CategoryPage;

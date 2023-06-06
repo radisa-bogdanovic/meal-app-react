@@ -1,9 +1,12 @@
-import { useLoaderData, useNavigate } from "react-router-dom";
+import { LoaderFunctionArgs,useLoaderData, useNavigate } from "react-router-dom";
 
 import SingleMeal from "../components/SingleMeal";
+import React from "react";
+import { SingleMealModel } from "./models/models";
+
 
 function SingleMealPage() {
-	const meal = useLoaderData();
+	const meal = useLoaderData() as SingleMealModel;
 	const navigate = useNavigate();
 
 	async function functionRandom() {
@@ -18,10 +21,10 @@ function SingleMealPage() {
 			navigate(`/meal/${resData.meals[0].idMeal}`);
 		}
 	}
-	return <SingleMeal meal={meal} randomItem={functionRandom} />;
+	return <SingleMeal {...meal}  randomItem={functionRandom} />;
 }
 
-export async function loader({ params }) {
+export async function loader({ params }:LoaderFunctionArgs) {
 	const response = await fetch(
 		`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${params.id}`
 	);
