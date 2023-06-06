@@ -1,46 +1,25 @@
-import { useParams, Link, useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
 import classes from "./SingleMeal.module.css";
 
-function SingleMeal() {
-	const routeParams = useParams();
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		fetchAllDetails();
-		console.log("work");
-	}, []);
-
-	const [meal, setMealDetail] = useState({});
-
-	const fetchAllDetails = () => {
-		fetch(
-			`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${routeParams.id}`
-		)
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
-				setMealDetail(data.meals[0]);
-			});
-	};
-	const fetchRandomMeal = () => {
-		fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
-				navigate(`/meal/${data.meals[0].idMeal}`);
-				setMealDetail(data.meals[0]);
-			});
-	};
+function SingleMeal({ meal, randomItem }) {
+	// const fetchRandomMeal = () => {
+	// 	fetch(`https://www.themealdb.com/api/json/v1/1/random.php`)
+	// 		.then((response) => {
+	// 			return response.json();
+	// 		})
+	// 		.then((data) => {
+	// 			navigate(`/meal/${data.meals[0].idMeal}`);
+	// 			setMealDetail(data.meals[0]);
+	// 		});
+	// };
 	return (
 		<>
 			<div className={classes["button-container"]}>
 				<button>
 					<Link to="/home"> Go Home</Link>
 				</button>
-				<button onClick={fetchRandomMeal}> Random Meal</button>
+				<button onClick={randomItem}> Random Meal</button>
 			</div>
 			<div className={classes.wrapper}>
 				<div className={classes.imageContainer}>

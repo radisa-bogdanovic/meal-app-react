@@ -1,28 +1,10 @@
 import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
+
 import { Link } from "react-router-dom";
 import classes from "./SingleCategory.module.css";
 
-function SingleCategory() {
+function SingleCategory(props) {
 	const routeParams = useParams();
-
-	useEffect(() => {
-		fetchAllMealsForCategory();
-	}, []);
-
-	const [categories, setMealsForCategory] = useState([]);
-
-	const fetchAllMealsForCategory = () => {
-		fetch(
-			`https://www.themealdb.com/api/json/v1/1/filter.php?c=${routeParams.categories}`
-		)
-			.then((response) => {
-				return response.json();
-			})
-			.then((data) => {
-				setMealsForCategory(data.meals);
-			});
-	};
 
 	return (
 		<>
@@ -30,7 +12,7 @@ function SingleCategory() {
 				Meals for {routeParams.categories} category
 			</h3>
 			<div className={classes.container}>
-				{categories.map((meal) => {
+				{props.category.map((meal) => {
 					return (
 						<div className={classes.wrapper} key={meal.idMeal}>
 							<h3> Name : {meal.strMeal} </h3>
