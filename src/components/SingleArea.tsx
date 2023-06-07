@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import classes from "./SingleCategory.module.css";
+import classes from "./SingleArea.module.css";
 import React, { useState } from "react";
 import {
 	ListOfMealsFromSingleCategory,
