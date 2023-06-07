@@ -7,7 +7,7 @@ function CategoryPage() {
 	const categories = useLoaderData() as  SingleMealCategoryName[] ;
 
 
-	return <Categories {...categories} />;
+	return <Categories  category= {categories} />;
 }
 
 export default CategoryPage;

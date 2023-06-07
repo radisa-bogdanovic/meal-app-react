@@ -85,3 +85,7 @@ export interface MealCategoryModel {
 export interface SingleMealCategoryName {
 	strCategory: string;
 }
+
+export interface ModelForProps {
+	category: SingleMealCategoryName[];
+}

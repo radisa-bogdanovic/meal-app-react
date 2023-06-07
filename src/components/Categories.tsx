@@ -1,18 +1,44 @@
-
 import classes from "./Categories.module.css";
-import {  SingleMealCategoryName } from "pages/models/models";
+import { ModelForProps, SingleMealCategoryName } from "pages/models/models";
 import MealCategory from "./MealCategory";
+import { useState } from "react";
 
-function Categories ( categories : SingleMealCategoryName[] ) {
+function Categories(categories: ModelForProps) {
+	const [listOfCategories, setArray] = useState(categories.category);
+
+	const handleSearch = (event: any) => {
+		const inputValue = event.target.value;
+		setArray(
+			categories.category.filter(
+				(SingleCategory: SingleMealCategoryName) => {
+					return SingleCategory.strCategory
+						.toLowerCase()
+						.includes(inputValue.toLowerCase().trim());
+				}
+			)
+		);
+	};
+
 	return (
 		<>
-			<h3 className={classes.title}>CATEGORIES</h3>
+			<div className={classes["search-box"]}>
+				<label htmlFor="seach" className={classes.title}>
+					Search For Category
+				</label>
+				<input
+					type="text"
+					placeholder="Category Name"
+					onChange={handleSearch}
+					className={classes["search-input"]}
+				/>
+			</div>
+
 			<div className={classes.wrapper}>
-				{Object.entries(categories).map(([, subject])  => {
+				{listOfCategories.map((SingleCategory: SingleMealCategoryName) => {
 					return (
 						<MealCategory
-							category={subject.strCategory}
-							key={subject.strCategory}
+							category={SingleCategory.strCategory}
+							key={SingleCategory.strCategory}
 						/>
 					);
 				})}

@@ -1,28 +1,57 @@
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import classes from "./SingleCategory.module.css";
-import React from "react";
-import { ListOfMealsFromSingleCategory } from "pages/models/models";
+import React, { useState } from "react";
+import {
+	ListOfMealsFromSingleCategory,
+	MealsFromSingleCategory,
+} from "pages/models/models";
 
-const SingleCategory: React.FC<ListOfMealsFromSingleCategory>= (category:ListOfMealsFromSingleCategory ) =>{
+const SingleCategory: React.FC<ListOfMealsFromSingleCategory> = (
+	category: ListOfMealsFromSingleCategory
+) => {
+	const [arrayOfMeals, setarrayOfMeals] = useState(category.meals);
 	const routeParams = useParams();
 
-
+	const handleSearch = (event: any) => {
+		const inputValue = event.target.value;
+		setarrayOfMeals(
+			category.meals.filter((SingleCategory: MealsFromSingleCategory) => {
+				return (
+					SingleCategory.strMeal
+						.toLowerCase()
+						.includes(inputValue.toLowerCase().trim()) ||
+					SingleCategory.idMeal
+						.toLowerCase()
+						.includes(inputValue.toLowerCase().trim())
+				);
+			})
+		);
+	};
 	return (
 		<>
-			<h3 className={classes.title}>
-				Meals for {routeParams.categories} category
-			</h3>
+			<div className={classes["search-box"]}>
+				<label htmlFor="seach" className={classes.title}>
+					Meals for {routeParams.categories} category
+				</label>
+				<input
+					type="text"
+					placeholder="Enter Name or Id"
+					onChange={handleSearch}
+					className={classes["search-input"]}
+				/>
+			</div>
+
 			<div className={classes.container}>
-				{Object.entries(category).map(([, subject]) => {
+				{arrayOfMeals.map((meal: MealsFromSingleCategory) => {
 					return (
-						<div className={classes.wrapper} key={subject.idMeal}>
-							<h3> Name : {subject.strMeal} </h3>
+						<div className={classes.wrapper} key={meal.idMeal}>
+							<h3> Name : {meal.strMeal} </h3>
 							<div className={classes.imgContainer}>
-								<img src={subject.strMealThumb} alt="" />
+								<img src={meal.strMealThumb} alt="" />
 							</div>
 							<button>
-								<Link to={`/meal/${subject.idMeal}`}> See more </Link>
+								<Link to={`/meal/${meal.idMeal}`}> See more </Link>
 							</button>
 						</div>
 					);
@@ -30,6 +59,6 @@ const SingleCategory: React.FC<ListOfMealsFromSingleCategory>= (category:ListOfM
 			</div>
 		</>
 	);
-}
+};
 
 export default SingleCategory;
