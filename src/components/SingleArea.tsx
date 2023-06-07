@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
-import classes from "./SingleArea.module.css";
+import classes from "./SingleCategory.module.css";
 import React, { useState } from "react";
 import {
 	ListOfMealsFromSingleCategory,
@@ -32,7 +32,7 @@ const SingleArea: React.FC<ListOfMealsFromSingleCategory> = (
 		<>
 			<div className={classes["search-box"]}>
 				<label htmlFor="seach" className={classes.title}>
-					Meals for {routeParams.categories} category
+					Meals from {routeParams.area} area
 				</label>
 				<input
 					type="text"

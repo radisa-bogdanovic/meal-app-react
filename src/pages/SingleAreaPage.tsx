@@ -1,11 +1,11 @@
 import { useLoaderData, LoaderFunctionArgs } from "react-router-dom";
-import SingleCategory from "../components/SingleCategory";
+import SingleArea from "../components/SingleArea";
 import { MealsFromSingleCategory } from "./models/models";
 
 function SingleAreaPage() {
 	const category = useLoaderData() as MealsFromSingleCategory[];
 
-	return <SingleCategory meals={category} />;
+	return <SingleArea meals={category} />;
 }
 
 export default SingleAreaPage;
