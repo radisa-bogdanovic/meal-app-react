@@ -40,6 +40,7 @@ function Areas(areas: ModelForAreaProps) {
 						/>
 					);
 				})}
+				{listOfCategories.length === 0 && <p> No results !</p>}
 			</div>
 		</>
 	);
