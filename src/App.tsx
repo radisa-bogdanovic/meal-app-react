@@ -2,7 +2,7 @@ import "./App.css";
 
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import  NotFound  from "./components/NotFound";
+import NotFound from "./components/NotFound";
 
 import NavigationBar from "./components/NavigationBar";
 
@@ -21,6 +21,10 @@ import SingleCategoryPage, {
 	loader as singleCategoryLoader,
 } from "./pages/SingleCategoryPage";
 import AboutUs from "./pages/AboutUsPage";
+import AreasPage, { loader as areasLoader } from "./pages/AreasPage";
+import SingleAreaPage, {
+	loader as singleAreaLoader,
+} from "./pages/SingleAreaPage";
 
 const Layout = () => {
 	return (
@@ -62,6 +66,17 @@ const routes = createBrowserRouter([
 			{
 				path: "*",
 				element: <NotFound />,
+			},
+			{
+				path: "/areas",
+				element: <AreasPage />,
+				loader: areasLoader,
+			},
+			{
+				path: "/areas/:area",
+				index: true,
+				element: <SingleAreaPage />,
+				loader: singleAreaLoader,
 			},
 		],
 	},

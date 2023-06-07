@@ -13,6 +13,9 @@ function NavigationBar() {
 					<li>
 						<Link to="/categories"> Categories</Link>
 					</li>
+					<li>
+						<Link to="/areas"> Areas</Link>
+					</li>
 
 					<li>
 						<Link to="/about"> About us</Link>

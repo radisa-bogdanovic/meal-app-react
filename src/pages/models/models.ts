@@ -86,6 +86,14 @@ export interface SingleMealCategoryName {
 	strCategory: string;
 }
 
+export interface SingleMealAreaName {
+	strArea: string;
+}
+
 export interface ModelForProps {
 	category: SingleMealCategoryName[];
+}
+
+export interface ModelForAreaProps {
+	areas: SingleMealAreaName[];
 }
