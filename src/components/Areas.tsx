@@ -21,7 +21,7 @@ function Areas(areas: ModelForAreaProps) {
 		<>
 			<div className={classes["search-box"]}>
 				<label htmlFor="seach" className={classes.title}>
-					Search For Category
+					Search For Area
 				</label>
 				<input
 					type="text"
@@ -40,6 +40,7 @@ function Areas(areas: ModelForAreaProps) {
 						/>
 					);
 				})}
+				{listOfCategories.length === 0 && <p> No results !</p>}
 			</div>
 		</>
 	);

@@ -41,7 +41,8 @@ function Categories(categories: ModelForProps) {
 							key={SingleCategory.strCategory}
 						/>
 					);
-				})}
+				})}{" "}
+				{listOfCategories.length === 0 && <p> No results !</p>}
 			</div>
 		</>
 	);
