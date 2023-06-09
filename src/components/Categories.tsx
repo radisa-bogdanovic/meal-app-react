@@ -1,20 +1,32 @@
 import classes from "./Categories.module.css";
 import { ModelForProps, SingleMealCategoryName } from "pages/models/models";
 import MealCategory from "./MealCategory";
-import { useState } from "react";
+import { RootState } from "../Store/Store";
+import { useSelector, useDispatch } from "react-redux";
+import { listOfCategories } from "../Store/mealsCategorySlice";
+import { useEffect } from "react";
 
-function Categories(categories: ModelForProps) {
-	const [listOfCategories, setArray] = useState(categories.category);
+const Categories = (categories: ModelForProps) => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(listOfCategories(categories.category));
+	}, [dispatch, categories.category]);
+	const categoriesList = useSelector(
+		(state: RootState) => state.meals.listOfCategories
+	);
 
 	const handleSearch = (event: any) => {
 		const inputValue = event.target.value;
-		setArray(
-			categories.category.filter(
-				(SingleCategory: SingleMealCategoryName) => {
-					return SingleCategory.strCategory
-						.toLowerCase()
-						.includes(inputValue.toLowerCase().trim());
-				}
+
+		dispatch(
+			listOfCategories(
+				categories.category.filter(
+					(SingleCategory: SingleMealCategoryName) => {
+						return SingleCategory.strCategory
+							.toLowerCase()
+							.includes(inputValue.toLowerCase().trim());
+					}
+				)
 			)
 		);
 	};
@@ -34,18 +46,18 @@ function Categories(categories: ModelForProps) {
 			</div>
 
 			<div className={classes.wrapper}>
-				{listOfCategories.map((SingleCategory: SingleMealCategoryName) => {
+				{categoriesList.map((SingleCategory: SingleMealCategoryName) => {
 					return (
 						<MealCategory
 							category={SingleCategory.strCategory}
 							key={SingleCategory.strCategory}
 						/>
 					);
-				})}{" "}
-				{listOfCategories.length === 0 && <p> No results !</p>}
+				})}
+				{categoriesList.length === 0 && <p> No results !</p>}
 			</div>
 		</>
 	);
-}
+};
 
 export default Categories;

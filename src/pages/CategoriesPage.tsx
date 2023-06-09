@@ -4,10 +4,9 @@ import Categories from "../components/Categories";
 import { SingleMealCategoryName } from "./models/models";
 
 function CategoryPage() {
-	const categories = useLoaderData() as  SingleMealCategoryName[] ;
+	const categories = useLoaderData() as SingleMealCategoryName[];
 
-
-	return <Categories  category= {categories} />;
+	return <Categories category={categories} />;
 }
 
 export default CategoryPage;

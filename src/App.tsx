@@ -25,6 +25,8 @@ import AreasPage, { loader as areasLoader } from "./pages/AreasPage";
 import SingleAreaPage, {
 	loader as singleAreaLoader,
 } from "./pages/SingleAreaPage";
+import { store } from "./Store/Store";
+import { Provider } from "react-redux";
 
 const Layout = () => {
 	return (
@@ -88,9 +90,11 @@ function AppRouter() {
 
 function App() {
 	return (
-		<div className="App">
-			<AppRouter />
-		</div>
+		<Provider store={store}>
+			<div className="App">
+				<AppRouter />
+			</div>
+		</Provider>
 	);
 }
 

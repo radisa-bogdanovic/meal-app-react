@@ -1,22 +1,30 @@
 import classes from "./Areas.module.css";
 import { ModelForAreaProps, SingleMealAreaName } from "pages/models/models";
 import AreaCategory from "./AreaCategory";
-import { useState } from "react";
+import { RootState } from "../Store/Store";
+import { useSelector, useDispatch } from "react-redux";
+import { updateAreas } from "../Store/mealsAreaSlice";
+import { useEffect } from "react";
 
 function Areas(areas: ModelForAreaProps) {
-	const [listOfCategories, setArray] = useState(areas.areas);
+	const areasList = useSelector((state: RootState) => state.areas.listOfAreas);
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(updateAreas(areas.areas));
+	}, [dispatch, areas.areas]);
 
 	const handleSearch = (event: any) => {
 		const inputValue = event.target.value;
-		setArray(
-			areas.areas.filter((SingleCategory: SingleMealAreaName) => {
-				return SingleCategory.strArea
-					.toLowerCase()
-					.includes(inputValue.toLowerCase().trim());
-			})
+		dispatch(
+			updateAreas(
+				areas.areas.filter((singleArea: SingleMealAreaName) => {
+					return singleArea.strArea
+						.toLowerCase()
+						.includes(inputValue.toLowerCase().trim());
+				})
+			)
 		);
 	};
-
 	return (
 		<>
 			<div className={classes["search-box"]}>
@@ -32,7 +40,7 @@ function Areas(areas: ModelForAreaProps) {
 			</div>
 
 			<div className={classes.wrapper}>
-				{listOfCategories.map((SingleCategory: SingleMealAreaName) => {
+				{areasList.map((SingleCategory: SingleMealAreaName) => {
 					return (
 						<AreaCategory
 							category={SingleCategory.strArea}
@@ -40,7 +48,7 @@ function Areas(areas: ModelForAreaProps) {
 						/>
 					);
 				})}
-				{listOfCategories.length === 0 && <p> No results !</p>}
+				{areasList.length === 0 && <p> No results !</p>}
 			</div>
 		</>
 	);
