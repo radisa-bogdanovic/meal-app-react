@@ -1,33 +1,45 @@
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import classes from "./SingleCategory.module.css";
-import React, { useState } from "react";
+
 import {
 	ListOfMealsFromSingleCategory,
 	MealsFromSingleCategory,
 } from "pages/models/models";
+import type { RootState } from "../Store/Store";
+import { useSelector, useDispatch } from "react-redux";
+import { listOfCategoryMeals } from "../Store/mealsCategorySlice";
+import { useEffect } from "react";
 
 const SingleCategory: React.FC<ListOfMealsFromSingleCategory> = (
 	category: ListOfMealsFromSingleCategory
 ) => {
-	const [arrayOfMeals, setarrayOfMeals] = useState(category.meals);
 	const routeParams = useParams();
+	const meals = useSelector((state: RootState) => state.meals.listOfMeals);
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(listOfCategoryMeals(category.meals));
+	}, [dispatch, category.meals]);
 
 	const handleSearch = (event: any) => {
 		const inputValue = event.target.value;
-		setarrayOfMeals(
-			category.meals.filter((SingleCategory: MealsFromSingleCategory) => {
-				return (
-					SingleCategory.strMeal
-						.toLowerCase()
-						.includes(inputValue.toLowerCase().trim()) ||
-					SingleCategory.idMeal
-						.toLowerCase()
-						.includes(inputValue.toLowerCase().trim())
-				);
-			})
+		dispatch(
+			listOfCategoryMeals(
+				category.meals.filter((SingleCategory: MealsFromSingleCategory) => {
+					return (
+						SingleCategory.strMeal
+							.toLowerCase()
+							.includes(inputValue.toLowerCase().trim()) ||
+						SingleCategory.idMeal
+							.toLowerCase()
+							.includes(inputValue.toLowerCase().trim())
+					);
+				})
+			)
 		);
 	};
+
 	return (
 		<>
 			<div className={classes["search-box"]}>
@@ -43,7 +55,7 @@ const SingleCategory: React.FC<ListOfMealsFromSingleCategory> = (
 			</div>
 
 			<div className={classes.container}>
-				{arrayOfMeals.map((meal: MealsFromSingleCategory) => {
+				{meals.map((meal: MealsFromSingleCategory) => {
 					return (
 						<div className={classes.wrapper} key={meal.idMeal}>
 							<h3> Name : {meal.strMeal} </h3>
@@ -56,6 +68,7 @@ const SingleCategory: React.FC<ListOfMealsFromSingleCategory> = (
 						</div>
 					);
 				})}
+				{meals.length === 0 && <p> No results !</p>}
 			</div>
 		</>
 	);
