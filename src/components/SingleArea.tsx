@@ -1,31 +1,37 @@
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import classes from "./SingleCategory.module.css";
-import { useEffect } from "react";
-import {
-	ListOfMealsFromSingleCategory,
-	MealsFromSingleCategory,
-} from "pages/models/models";
+import { useEffect, useState } from "react";
+import { MealsFromSingleCategory } from "pages/models/models";
 
 import type { RootState } from "../Store/Store";
 import { useSelector, useDispatch } from "react-redux";
 import { listOfAreaMeals } from "../Store/mealsAreaSlice";
+import api from "../api/meals";
 
-const SingleArea: React.FC<ListOfMealsFromSingleCategory> = (
-	category: ListOfMealsFromSingleCategory
-) => {
+const SingleArea: React.FC = () => {
 	const routeParams = useParams();
 	const meals = useSelector((state: RootState) => state.areas.listOfMeals);
 	const dispatch = useDispatch();
+	const [initialData, searchHandler] = useState([]);
 	useEffect(() => {
-		dispatch(listOfAreaMeals(category.meals));
-	}, [dispatch, category.meals]);
+		const response = async () => {
+			try {
+				const response = await api.get(`/filter.php?a=${routeParams.area}`);
+				dispatch(listOfAreaMeals(response.data.meals));
+				searchHandler(response.data.meals);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		response();
+	}, []);
 
 	const handleSearch = (event: any) => {
 		const inputValue = event.target.value;
 		dispatch(
 			listOfAreaMeals(
-				category.meals.filter((SingleCategory: MealsFromSingleCategory) => {
+				initialData.filter((SingleCategory: MealsFromSingleCategory) => {
 					return (
 						SingleCategory.strMeal
 							.toLowerCase()

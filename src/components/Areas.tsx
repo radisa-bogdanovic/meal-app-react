@@ -1,23 +1,35 @@
 import classes from "./Areas.module.css";
-import { ModelForAreaProps, SingleMealAreaName } from "pages/models/models";
+import { SingleMealAreaName } from "pages/models/models";
 import AreaCategory from "./AreaCategory";
 import { RootState } from "../Store/Store";
 import { useSelector, useDispatch } from "react-redux";
 import { updateAreas } from "../Store/mealsAreaSlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import api from "../api/meals";
 
-function Areas(areas: ModelForAreaProps) {
+function Areas() {
 	const areasList = useSelector((state: RootState) => state.areas.listOfAreas);
 	const dispatch = useDispatch();
+	const [initialData, searchHandler] = useState([]);
+
 	useEffect(() => {
-		dispatch(updateAreas(areas.areas));
-	}, [dispatch, areas.areas]);
+		const response = async () => {
+			try {
+				const response = await api.get("/list.php?a=list");
+				dispatch(updateAreas(response.data.meals));
+				searchHandler(response.data.meals);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		response();
+	}, []);
 
 	const handleSearch = (event: any) => {
 		const inputValue = event.target.value;
 		dispatch(
 			updateAreas(
-				areas.areas.filter((singleArea: SingleMealAreaName) => {
+				initialData.filter((singleArea: SingleMealAreaName) => {
 					return singleArea.strArea
 						.toLowerCase()
 						.includes(inputValue.toLowerCase().trim());
