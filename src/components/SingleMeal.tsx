@@ -1,39 +1,74 @@
-import { Link } from "react-router-dom"
+import { Link, useParams, useNavigate } from "react-router-dom";
 import classes from "./SingleMeal.module.css";
-import {  SingleMealModel, } from "pages/models/models";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "Store/Store";
+import { randomMeal, singleMeal } from "../Store/singleMealSlice";
+import api from "../api/meals";
 
+function SingleMeal() {
+	const navigate = useNavigate();
+	const routeParams = useParams();
+	const mealState = useSelector(
+		(state: RootState) => state.singleMeal.singleMeal
+	);
+	const dispatch = useDispatch();
 
+	useEffect(() => {
+		const response = async () => {
+			try {
+				const response = await api.get(`/lookup.php?i=${routeParams.id}`);
+				dispatch(singleMeal(response.data.meals[0]));
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		response();
+	}, []);
 
+	const random = async () => {
+		try {
+			const response = await api.get(`/random.php`);
+			dispatch(randomMeal(response.data.meals[0]));
+			navigate(`/meal/${response.data.meals[0].idMeal}`);
+		} catch (err) {
+			console.log(err);
+		}
+	};
 
-function SingleMeal(props: SingleMealModel) {
 	return (
 		<>
 			<div className={classes["button-container"]}>
 				<button>
 					<Link to="/home"> Go Home</Link>
 				</button>
-				<button onClick={props.randomItem}> Random Meal</button>
+				<button onClick={random}> Random Meal</button>
 			</div>
 			<div className={classes.wrapper}>
 				<div className={classes.imageContainer}>
-					<img src={props.strMealThumb} alt="mealImage" />
+					<img src={mealState.strMealThumb} alt="mealImage" />
 				</div>
 
 				<div className={classes["description-container"]}>
-					<h3> Meal Name : {props.strMeal}</h3>
-					<p> Category: {props.strCategory}</p>
-					<p> Tags: {props.strTags ? props.strTags : "No avaliable tags"}</p>
-					<p>Area :{props.strArea}</p>
+					<h3> Meal Name : {mealState.strMeal}</h3>
+					<p> Category: {mealState.strCategory}</p>
+					<p>
+						Tags:
+						{mealState.strTags ? mealState.strTags : "No avaliable tags"}
+					</p>
+					<p>Area :{mealState.strArea}</p>
 					<p>
 						Drink altternate :
-						{props.strDrinkAlternate ? props.strDrinkAlternate : "any"}
+						{mealState.strDrinkAlternate
+							? mealState.strDrinkAlternate
+							: "any"}
 					</p>
 					<p>
-						<a href={props.strYoutube} target="_blankl">
+						<a href={mealState.strYoutube} target="_blankl">
 							Youtube Link
 						</a>
 					</p>
-					<p>Description : {props.strInstructions} </p>
+					<p>Description : {mealState.strInstructions} </p>
 				</div>
 			</div>
 		</>

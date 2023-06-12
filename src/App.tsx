@@ -6,25 +6,17 @@ import NotFound from "./components/NotFound";
 
 import NavigationBar from "./components/NavigationBar";
 
-import CategoryPage, {
-	loader as categoriesLoader,
-} from "./pages/CategoriesPage";
+import CategoryPage from "./pages/CategoriesPage";
 
 import { Outlet } from "react-router-dom";
 
 import HomePage from "./components/HomePage";
 import Footer from "./components/Footer";
-import SingleMealPage, {
-	loader as singleMealLoader,
-} from "./pages/SingleMealPage";
-import SingleCategoryPage, {
-	loader as singleCategoryLoader,
-} from "./pages/SingleCategoryPage";
+import SingleMealPage from "./pages/SingleMealPage";
+import SingleCategoryPage from "./pages/SingleCategoryPage";
 import AboutUs from "./pages/AboutUsPage";
-import AreasPage, { loader as areasLoader } from "./pages/AreasPage";
-import SingleAreaPage, {
-	loader as singleAreaLoader,
-} from "./pages/SingleAreaPage";
+import AreasPage from "./pages/AreasPage";
+import SingleAreaPage from "./pages/SingleAreaPage";
 import { store } from "./Store/Store";
 import { Provider } from "react-redux";
 
@@ -47,18 +39,15 @@ const routes = createBrowserRouter([
 			{
 				path: "/categories",
 				element: <CategoryPage />,
-				loader: categoriesLoader,
 			},
 			{
 				path: "/categories/:categories",
 				index: true,
 				element: <SingleCategoryPage />,
-				loader: singleCategoryLoader,
 			},
 			{
 				path: "/meal/:id",
 				element: <SingleMealPage />,
-				loader: singleMealLoader,
 			},
 			{
 				path: "/about",
@@ -72,13 +61,11 @@ const routes = createBrowserRouter([
 			{
 				path: "/areas",
 				element: <AreasPage />,
-				loader: areasLoader,
 			},
 			{
 				path: "/areas/:area",
 				index: true,
 				element: <SingleAreaPage />,
-				loader: singleAreaLoader,
 			},
 		],
 	},

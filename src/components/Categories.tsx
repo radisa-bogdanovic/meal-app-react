@@ -1,16 +1,28 @@
 import classes from "./Categories.module.css";
-import { ModelForProps, SingleMealCategoryName } from "pages/models/models";
+import { SingleMealCategoryName } from "pages/models/models";
 import MealCategory from "./MealCategory";
 import { RootState } from "../Store/Store";
 import { useSelector, useDispatch } from "react-redux";
 import { listOfCategories } from "../Store/mealsCategorySlice";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import api from "../api/meals";
 
-const Categories = (categories: ModelForProps) => {
+const Categories = () => {
 	const dispatch = useDispatch();
+	const [initialData, searchHandler] = useState([]);
 	useEffect(() => {
-		dispatch(listOfCategories(categories.category));
-	}, [dispatch, categories.category]);
+		const response = async () => {
+			try {
+				const response = await api.get("/list.php?c=list");
+				dispatch(listOfCategories(response.data.meals));
+				searchHandler(response.data.meals);
+			} catch (err) {
+				console.log(err);
+			}
+		};
+		response();
+	}, []);
+
 	const categoriesList = useSelector(
 		(state: RootState) => state.meals.listOfCategories
 	);
@@ -20,13 +32,11 @@ const Categories = (categories: ModelForProps) => {
 
 		dispatch(
 			listOfCategories(
-				categories.category.filter(
-					(SingleCategory: SingleMealCategoryName) => {
-						return SingleCategory.strCategory
-							.toLowerCase()
-							.includes(inputValue.toLowerCase().trim());
-					}
-				)
+				initialData.filter((SingleCategory: SingleMealCategoryName) => {
+					return SingleCategory.strCategory
+						.toLowerCase()
+						.includes(inputValue.toLowerCase().trim());
+				})
 			)
 		);
 	};
